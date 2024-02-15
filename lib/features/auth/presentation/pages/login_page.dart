@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:project3/features/auth/presentation/widgets/login_form.dart';
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
@@ -7,10 +8,14 @@ class LoginPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login Page'),
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [LoginForm()],
+        ),
       ),
-      body: const Center(),
     );
   }
 }

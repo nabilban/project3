@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project3/cores/routes/router.dart';
-import 'package:project3/features/auth/presentation/pages/splash_page.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Supabase.initialize(
+    url: 'https://jlcsfylogoencbukvsmz.supabase.co',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpsY3NmeWxvZ29lbmNidWt2c216Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDc0ODEyMjksImV4cCI6MjAyMzA1NzIyOX0.4TAiDcAhXGD7cgnp8mayM04o6FfliCSHvXC43a5NbEA',
+  );
+  runApp(const ProviderScope(child: MyApp()));
 }
+
+final supabase = Supabase.instance.client;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -30,10 +40,10 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 100, 100, 255)),
         useMaterial3: true,
       ),
-      home: const SplashPage(),
       onGenerateRoute: (RouteSettings routeSettings) =>
           AppRouter(routeSettings: routeSettings),
     );

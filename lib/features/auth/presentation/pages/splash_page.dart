@@ -1,40 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project3/cores/routes/router.dart';
-import 'package:project3/cores/widgets/my_button.dart';
+import 'package:project3/main.dart';
 
-class SplashPage extends ConsumerWidget {
+class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('splash page'),
-      ),
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            children: [
-              MyButton(
-                onTap: () {
-                  Navigator.pushReplacementNamed(context, Routes.register);
-                },
-                text: 'REGISTER',
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              MyButton(
-                onTap: () {
-                  Navigator.pushReplacementNamed(context, Routes.login);
-                },
-                text: 'LOGIN',
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+  State<SplashPage> createState() => _SplashPageState();
+}
+
+class _SplashPageState extends State<SplashPage> {
+  @override
+  void initState() {
+    super.initState();
+    _redirect();
+  }
+
+  Future<void> _redirect() async {
+    await Future.delayed(Duration.zero);
+    if (!mounted) {
+      return;
+    }
+
+    final session = supabase.auth.currentSession;
+    if (session != null) {
+      Navigator.pushReplacementNamed(context, Routes.home);
+    } else {
+      Navigator.pushReplacementNamed(context, Routes.loginWall);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold();
   }
 }
