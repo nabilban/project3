@@ -3,6 +3,7 @@ import 'package:project3/cores/abstracts/exception.dart';
 import 'package:project3/cores/abstracts/failure.dart';
 import 'package:project3/features/auth/data/datasource/auth_datasource.dart';
 import 'package:project3/features/auth/domain/entities/auth_entity.dart';
+import 'package:project3/features/auth/domain/entities/register_entitiy.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../domain/repositories/auth_repository.dart';
@@ -23,6 +24,24 @@ class AuthRepositoryImpl extends AuthRepository {
         password: password,
       );
       return Right(AuthEntity(user: user));
+    } on LoginException {
+      return Left(LoginFailure());
+    } catch (e) {
+      return Left(UnknownFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, RegisterEntity>> register({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final User user = await datasource.register(
+        userEmail: email,
+        password: password,
+      );
+      return Right(RegisterEntity(user: user));
     } on LoginException {
       return Left(LoginFailure());
     } catch (e) {

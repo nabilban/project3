@@ -62,8 +62,22 @@ class _RegisterFormState extends ConsumerState<LoginForm> {
       ),
       child: Column(
         children: [
+          // ignore: prefer_const_constructors
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: const [
+              SizedBox(
+                  child: Text(
+                'LOGIN ',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              )),
+            ],
+          ),
           SizedBox(
-            child: AuthTextField(
+            child: AuthTextfield(
               prefixIcon: const Icon(Icons.email_outlined),
               hintText: 'email',
               controller: _emailController,
@@ -73,7 +87,7 @@ class _RegisterFormState extends ConsumerState<LoginForm> {
             height: 15,
           ),
           SizedBox(
-            child: AuthTextField(
+            child: AuthTextfield(
               prefixIcon: const Icon(Icons.lock_outlined),
               suffixIcon: Padding(
                 padding: const EdgeInsets.only(
@@ -97,13 +111,14 @@ class _RegisterFormState extends ConsumerState<LoginForm> {
           const SizedBox(
             height: 10,
           ),
-          const Text(
-            'error',
-            style: TextStyle(
-              color: Colors.red,
-              fontWeight: FontWeight.bold,
+          if (state.errorMessage != '')
+            Text(
+              state.errorMessage,
+              style: const TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
           const SizedBox(
             height: 20,
           ),

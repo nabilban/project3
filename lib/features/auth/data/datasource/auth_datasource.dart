@@ -8,6 +8,11 @@ abstract class AuthDatasource {
     required String userEmail,
     required String password,
   });
+
+  register({
+    required String userEmail,
+    required String password,
+  });
 }
 
 class AuthDatasourceImpl extends AuthDatasource {
@@ -23,6 +28,24 @@ class AuthDatasourceImpl extends AuthDatasource {
 
       if (result.user != null) {
         throw LoginException();
+      }
+      return result.user!;
+    } catch (e) {
+      throw UnknownException();
+    }
+  }
+
+  @override
+  Future<User> register({
+    required String userEmail,
+    required String password,
+  }) async {
+    try {
+      final email = userEmail.trim();
+      final result =
+          await supabase.auth.signUp(password: password, email: email);
+      if (result.user != null) {
+        throw RegisterException();
       }
       return result.user!;
     } catch (e) {

@@ -9,12 +9,28 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      body: ElevatedButton(
-          onPressed: () {
-            supabase.auth.signOut();
-            Navigator.pushReplacementNamed(context, Routes.loginWall);
-          },
-          child: const Text('test')),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                padding: const EdgeInsets.all(20),
+                color: Colors.black,
+                iconSize: 35,
+                onPressed: () {
+                  supabase.auth.signOut();
+                  Navigator.pushReplacementNamed(context, Routes.loginWall);
+                },
+                icon: const Icon(Icons.logout_outlined),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            )
+          ],
+        ),
+      ),
     );
   }
 }
